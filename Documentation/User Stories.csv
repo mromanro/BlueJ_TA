@@ -1,0 +1,11 @@
+;;;;;
+;;;;;
+;This user story relies on:;Estimated time for user story;Justification for estimated time;Score;Scores are based off # of modules needed.
+As a user, I want to select exercises. #1;independent;;;5;Reference User Story complexity 
+As a user, I want to work on a exercise.#2;#1;;;1;Metrics Spreadsheets for more info
+As a user, I would to receive feedback.#3;#6;;;4;Modules can be found in the proposed
+As a user, I want to see examples of the exercises.#4;#1;;;4;Bluej codingbat design iteration pdf.
+As a user, I want to see a description of the exercises. #5;#1;;;4;
+As a user, I want to run my solutions.#6;#2;;;4;
+As a user, I want to see completed exercises.;;n/a;out of scope at the moment;;
+As a user, I want to see solutions.;;n/a;out of scope at the moment;;

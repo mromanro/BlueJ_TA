@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercise>
+    <title>Permutations Exercise</title>
+    <description>
+        Complete the perm method within the Permutations class to 
+        calculate the permutation of any number n choose r.
+    </description>
+    <examples>
+        <example>perm(5, 3) = 60</example>
+        <example>perm(7, 1) = 7</example>
+        <example>perm(11, 2) = 110</example>
+    </examples>
+    <hint>
+        Recursion might be a good approach to solving this problem in a simple way.
+    </hint>
+    <sampleAnswer>
+        public int perm(int n, int r) {
+            if (r > 0) {
+                return n * perm(n - 1, r - 1);
+            }
+            return 1;
+        }
+    </sampleAnswer>
+    <javaName>Permutations</javaName>
+    <javaCode>public class Permutations {
+    public int perm(int n, int r){
+        return -1;
+    }
+}
+    </javaCode>
+    <junitName>PermutationTest</junitName>
+    <junitCode>
+        import org.junit.*;
+        import static org.junit.Assert.*;
+
+        public class PermutationTest {
+   
+            static Permutations userPerm = new Permutations();
+    
+            @Test
+            public void permutationTestA(){
+                assertPerm(5, 3);
+            }
+        
+            @Test
+            public void permutationTestB(){
+                assertPerm(10, 2);
+            }
+        
+            @Test
+            public void permutationTestC(){
+                assertPerm(7, 1);
+            }
+    
+            private static void assertPerm(int n, int r){
+                int up = userPerm.perm(n, r);
+                int tp = perm(n, r);
+                assertTrue(&quot;perm(&quot;+ n +&quot;, &quot;+ r +&quot;) was suppost to equal &quot;+ tp +&quot;, but got &quot;+ up +&quot; instead.&quot;, up == tp);
+            }
+    
+            private static int perm(int n, int r) {
+                if (r > 0) {
+                    return n * perm(n - 1, r - 1);
+                }
+                return 1;
+            }
+        }   
+    </junitCode>
+</exercise>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="titleLabel" layoutX="29.0" layoutY="27.0" prefHeight="27.0" prefWidth="400.0" text="Title">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="64.0" prefHeight="17.0" prefWidth="400.0" text="Description:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="descriptionLabel" alignment="TOP_LEFT" layoutX="29.0" layoutY="94.0" prefHeight="105.0" prefWidth="400.0" text="Description area" textOverrun="CLIP" wrapText="true" />
+      <Label layoutX="29.0" layoutY="203.0" prefHeight="17.0" prefWidth="400.0" text="Examples:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="examplesLabel" alignment="TOP_LEFT" layoutX="29.0" layoutY="223.0" prefHeight="143.0" prefWidth="400.0" text="Examples" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="okButton" layoutX="29.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleButtonAction" text="OK" />
+   </children>
+</AnchorPane>

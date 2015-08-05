@@ -1,0 +1,3 @@
+bluej.lib.dir=/usr/share/bluej/
+user.bluej.dir=${user.home}/.bluej
+bluej.launch.command=/usr/bin/bluej

@@ -1,0 +1,45 @@
+Class documentation
+<---- javadoc command: ---->
+C:\Program Files (x86)\BlueJ\jdk\bin\javadoc.exe
+-author
+-version
+-nodeprecated
+-package
+-noindex
+-notree
+-nohelp
+-nonavbar
+-source
+1.8
+-classpath
+C:\Program Files (x86)\BlueJ\lib\bluejcore.jar;C:\Program Files (x86)\BlueJ\lib\junit-4.8.2.jar;C:\Program Files (x86)\BlueJ\lib\bluejext.jar;C:\Program Files (x86)\BlueJ\lib\junit-4.8.2.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-core.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-device.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-gpio-extension.jar;C:\Program Files (x86)\BlueJ\lib\userlib\pi4j-service.jar;C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\+libs\bluejext.jar;C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\+libs\jfxrt.jar;C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\+libs\junit-4.8.2.jar;C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src
+-d
+C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc
+-encoding
+windows-1252
+-charset
+windows-1252
+-docletpath
+C:\Program Files (x86)\BlueJ\lib\bjdoclet.jar
+-doclet
+bluej.doclet.doclets.formats.html.HtmlDoclet
+C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\Extension\BackEnd\FileUtil.java
+<---- end of javadoc command ---->
+Loading source file C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\Extension\BackEnd\FileUtil.java...
+Constructing Javadoc information...
+javadoc: warning - Multiple sources of package comments found for package "bluej.extensions"
+Standard Doclet version 1.8.0_20
+Building tree for all the packages and classes...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\Extension\BackEnd\FileUtil.html...
+C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\Extension\BackEnd\FileUtil.java:51: warning - @references is an unknown tag.
+C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\Extension\BackEnd\FileUtil.java:111: warning - @references is an unknown tag.
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\Extension\BackEnd\package-frame.html...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\Extension\BackEnd\package-summary.html...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\constant-values.html...
+Building index for all the packages and classes...
+Building index for all classes...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\allclasses-frame.html...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\allclasses-noframe.html...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\index.html...
+Generating C:\Users\Miguel\Documents\birdfeedr\Projects\BlueJ_TA\Code\src\doc\stylesheet.css...
+3 warnings

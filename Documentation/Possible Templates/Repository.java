@@ -1,0 +1,3 @@
+/**
+ * Access to database linking.
+ */

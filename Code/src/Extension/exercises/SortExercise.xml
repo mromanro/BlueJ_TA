@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercise>
+    <title>Sorting Exercise</title>
+    <description>
+        Fill in the method sort(int[] data) in the class SortingExercise, 
+        with some code that will sort the int array in assending order.
+    </description>
+    <examples>
+        <example>Sort([2, 3, 1]) -> [1, 2, 3]</example>
+        <example>Sort([5, 3, 4, -1]) -> [-1, 3, 4, 5]</example>
+        <example>Sort([9, 3, 5, 3, 4, 1]) -> [1, 3, 3, 4, 5, 9]</example>
+    </examples>
+    <hint>
+        Think about how the data can be compared and switched between the other elements.
+    </hint>
+    <sampleAnswer>
+        public Class sort{
+            public static void sort(int[] data){
+                for(int i = 0; i &lt; data.length; i++){
+                    for(int k = i+1; k &lt; data.length; k++){
+                        if(data[i] &gt; data[k]){
+                            swap(i, k, data);
+                        }
+                    }
+                }
+            }
+    
+            private static void swap(int a, int b, int[] data){
+                int temp = data[a];
+                data[a] = data[b];
+                data[b] = temp;
+            }
+        }
+    </sampleAnswer>
+    <javaName>SortingExercise</javaName>
+    <javaCode>public class SortingExercise {
+    public void sort(int[] data){ 
+        //add your code here
+    }  
+}   
+    </javaCode>
+    <junitName>SortTest</junitName>
+    <junitCode>
+        import org.junit.*;
+        import static org.junit.Assert.*;
+        import java.util.Random;
+
+        public class SortTest {
+    
+            static SortingExercise sortEx = new SortingExercise();
+            static Random rand = new Random();
+    
+            @Test
+            public void testSort(){
+                int[] data = randData(1000, -100, 100);
+                sortEx.sort(data);
+                assertSorted(data, true);
+            }
+    
+            private static int[] randData(int size, int min, int max){
+                int[] data = new int[size]; 
+                for(int i = 0; i &lt; data.length; i++){
+                    data[i] = rand.nextInt((max - min) + 1) + min;
+                }
+                return data; 
+            }   
+    
+            private static void assertSorted(int[] data, boolean assending) {
+                for(int i = 0; i &lt; data.length - 2; i++){
+                    boolean bool = (assending &amp;&amp; data[i] &lt;= data[i + 1]) ||
+                                   (!assending &amp;&amp; data[i] &gt;= data[i + 1]);
+                    if(!bool){
+                    String comp = assending ? &quot;&lt;=&quot; : &quot;&gt;=&quot;;
+                        String msg = &quot;data[&quot;+i+&quot;] = &quot;+data[i]+&quot;, was not &quot;+comp+ &quot; than data[&quot;+(i+1)+&quot;] = &quot;+ data[i+1];
+                        assertTrue(msg, bool);
+                    }
+                }
+            }
+        }
+    </junitCode>
+</exercise>

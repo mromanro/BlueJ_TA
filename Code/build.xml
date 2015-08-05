@@ -1,0 +1,292 @@
+<!--
+This file is a build recipe for the project. It will compile Java files and
+ install the extension into the user's home folder. Before building the project,
+ please ensure that Apache Ant and the JDK are installed. This project has been
+ tested with Ant version 1.9.3. It may work with older/newer versions, but, we
+ can't make any guarantees. To build the project, run the "ant" command in the
+ project folder. In Windows, open the command line and on Mac/Linux open the
+ terminal.
+ 
+Note:
+Please use the "ant clean" command should be run to eradicate the old files.
+ Developers should remember to run this command the first time or every time
+ they update their SVN folder.
+
+Also, as a developer, make sure that pre-existing extension JARs are deleting.
+ Failure to remove pre-existing files may result in a false positive for
+ building and running the extension.
+
+Author: Josh Gillham
+Version: 2015-04-18
+-->
+<project name = "BlueJ-TA" default = "run" basedir = ".">
+    <property file = "project.properties"/>
+    <property name = "dist.dir" location = "dist"/>
+    <property name = "source.dir" location = "src"/>
+    <property name = "compile.dest.dir" location = "${source.dir}"/>
+    <property name = "lib.dir" location = "${source.dir}/+libs"/>
+    <property name = "doc.dir" location = "doc"/>
+    <property name = "results.dir" location = "results"/>
+
+    <!-- Locates JavaFX. -->
+    <pathconvert property="javafx.jar.file" setonempty="false" pathsep=" ">
+        <path>
+            <fileset dir="${java.home}/lib/" includes="**/jfxrt.jar" />
+        </path>
+    </pathconvert>
+
+    <!-- Set project class path. -->
+    <path id="cp">
+        <pathelement path = "${compile.dest.dir}"/>
+        <file file = "${bluej.lib.dir}/bluejext.jar"/>
+        <fileset dir = "${lib.dir}" includes = "*.jar"/>
+        <file file = "${javafx.jar.file}"/>
+        <file file = "${junit.jar.file}"/>
+    </path>
+    
+
+    <!-- Detects JavaFX jar. -->
+    <condition property="javafx.jar.exists">
+        <resourcecount when="greater" count="0">
+            <fileset file="${javafx.jar.file}"/>
+        </resourcecount>
+    </condition>
+
+    <!-- Detect Bad Java versions -->
+    <condition property = "bad.java.version">
+        <or>
+            <equals arg1="${ant.java.version}" arg2="1.1"/>
+            <equals arg1="${ant.java.version}" arg2="1.2"/>
+            <equals arg1="${ant.java.version}" arg2="1.3"/>
+            <equals arg1="${ant.java.version}" arg2="1.4"/>
+            <equals arg1="${ant.java.version}" arg2="1.5"/>
+            <equals arg1="${ant.java.version}" arg2="1.6"/>
+        </or>
+    </condition>
+
+    <!-- Set error messages. -->
+    <property name = "error.message.bad.java.version" value = "Unsupported Java 
+version: ${ant.java.version}. 
+            Make sure that the Java version is 1.7 or greater."/>
+    <property name = "error.message.junit.not.found" value = "The build could 
+not locate JUnit."/>
+    <property name = "error.message.javafx.not.found" value = "The build could 
+not locate JavaFX."/>
+    <property name = "error.message.bluej.lib.dir.not.defined"
+     value = "bluej.lib.dir property does not have a value."/>
+    <property name = "error.message.bluej.lib.dir.does.not.exit"
+     value = "bluej.lib.dir does not refer to real folder."/>
+    <property name = "error.message.user.bluej.dir.does.not.exit" value = 
+"user.bluej.dir does not refer to real folder."/>
+
+    <!-- Detects Mac. -->
+    <condition property="isMac">
+        <os family="mac" />
+    </condition>
+
+    <!-- Detects Windows. -->
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
+    <!-- Detects Unix. -->
+    <condition property="isLinuxNotMac">
+        <and>
+          <os family="unix" />
+          <not>
+              <os family="mac" />
+          </not>
+        </and>
+    </condition>
+
+    <!-- Loads Windows properties. -->
+    <target name = "windows-props" if = "isWindows">
+        <property file = "local.properties.windows"/>
+    </target>
+
+    <!-- Loads Mac properties. -->
+    <target name = "mac-props" if = "isMac">
+        <property file = "local.properties.macOSX"/>
+    </target>
+
+    <!-- Loads Unix properties. -->
+    <target name = "linux-props" if = "isLinuxNotMac">
+        <property file = "local.properties.unix"/>
+    </target>
+    
+    <!-- Sets properties that depend on OS specific properties. -->
+    <target name = "set-env" depends = "windows-props,mac-props,linux-props">
+        <property name = "user.bluej.dir" location = "${user.home}/.bluej"/>
+        <property name = "ext.dir" location = "${user.bluej.dir}/extensions"/>
+        <property name = "jar.file" location = "${dist.dir}/${jar.name}"/>
+        <property name = "ext.file" location = "${ext.dir}/${jar.name}"/>
+        <property name = "bluej.log.file"
+                  location = "${user.bluej.dir}/bluej-debuglog.txt"/>
+
+        <!-- Locates JUnit. -->
+        <pathconvert property="junit.jar.file" setonempty="false" pathsep=" ">
+            <path>
+                <fileset dir="${bluej.lib.dir}" includes="**/junit*.jar" />
+            </path>
+        </pathconvert>
+
+        <!-- Detects JUnit jar. -->
+        <condition property="junit.jar.exists">
+            <available file = "${junit.jar.file}"/>
+        </condition>
+
+        <!-- Make sure the BlueJ lib dir exists -->
+        <condition property="bluej.lib.dir.exists">
+            <available file = "${bluej.lib.dir}"/>
+        </condition>
+
+    </target>
+
+    <!-- Delete build-generated files. -->
+    <target name = "clean" depends = "set-env"
+            description = "Removes build-generated files.">
+        <delete file = "${ext.file}"/>
+        <delete dir = "${dist.dir}"/>
+        <delete>
+            <fileset dir="${source.dir}" includes="**/*.class"/>
+            <fileset dir="${source.dir}" includes="**/*.ctxt"/>
+        </delete>
+        <delete dir = "${doc.dir}"/>
+        <delete dir = "${results.dir}"/>
+    </target>
+
+    <!-- Create folders needed for the build. -->
+    <target name = "prebuild"
+            description = "Creates build dependencies.">
+        <mkdir dir = "${dist.dir}"/>
+        <mkdir dir = "${compile.dest.dir}"/>
+    </target>
+
+    <!-- Compile sources. -->
+    <target name = "compile" depends = "set-env,prebuild"
+            description = "Compiles Java sources.">
+        <fail message = "${error.message.bluej.lib.dir.not.defined}"
+        unless = "bluej.lib.dir"/>
+        <fail message = "error.message.bluej.lib.dir.does.not.exit"
+         unless = "bluej.lib.dir.exists"/>
+        <fail message = "${error.message.javafx.not.found}"
+         unless = "javafx.jar.exists"/>
+        <fail message = "${error.message.junit.not.found}"
+         unless = "junit.jar.exists"/>
+        <fail message="${error.message.bad.java.version}"
+         if = "bad.java.version"/>
+        <javac srcdir = "${source.dir}" destdir = "${compile.dest.dir}" 
+         debug = "${debug.mode}" source = "${source.level}"
+         target = "${target.level}" includeantruntime="false"
+         bootclasspath="${java.home}/lib/rt.jar"
+         excludes = "Extension/BackEnd/runner/JRunner.java">
+            <classpath refid = "cp"/>
+            <!--<compilerarg value="-Xlint"/>-->
+        </javac>
+
+        <!--The JRunner needs to be compiled so class ends up
+           in the same folder stead of the src/ folder.-->
+        <javac srcdir = "${source.dir}/Extension/BackEnd/runner/"
+	 destdir = "${compile.dest.dir}/Extension/BackEnd/runner/" 
+         debug = "${debug.mode}" source = "${source.level}"
+         target = "${target.level}" includeantruntime="false"
+         bootclasspath="${java.home}/lib/rt.jar">
+            <classpath refid = "cp"/>
+            <!--<compilerarg value="-Xlint"/>-->
+        </javac>
+    </target>
+
+    <!-- Builds the jar file and includes JGit classes.-->
+    <target name = "jar" depends = "compile"
+            description = "Creates the extension Java jar file.">
+        <jar destfile = "${jar.file}">
+            <fileset dir = "${compile.dest.dir}" includes="**/*.class"/>
+            <fileset dir = "${source.dir}" includes="**/*.fxml"/>
+            <fileset dir = "${source.dir}" includes="**/*.lst"/>
+            <fileset dir = "${source.dir}" includes="**/*.xml"/>
+            <zipfileset excludes="META-INF/**/*" src="${javafx.jar.file}"/>
+            <manifest>
+                <attribute name = "Main-Class" value = "${main.class}"/>
+                <attribute name = "Class-Path" value = "${jar.class.path}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!--
+     Copies the extension and it's suppporting JARs into the user's folder.-->
+    <target name = "install-ext" depends = "jar"
+     description = "Puts the Java jar into the user's extension folder.">
+        <mkdir dir = "${ext.dir}"/>
+        <copy file = "${jar.file}" todir="${ext.dir}"/>
+    </target>
+
+    <!-- Performs launch-required steps. -->
+    <target name = "pre-launch" depends = "install-ext">
+        <fail message="${error.message.bad.java.version}"
+         if = "bad.java.version"/>
+        <delete file = "${bluej.log.file}"/>
+        <mkdir dir = "${results.dir}"/>
+    </target>
+
+    <!-- Runs the program on non-Unix platforms. -->
+    <target name = "launch-1" depends = "pre-launch"
+     unless = "isLinuxNotMac">
+        <exec executable="${bluej.launch.command}"/>
+    </target>
+
+    <!-- Runs the program on a Unix machine. -->
+    <target name = "launch-alt" depends = "pre-launch"
+     if = "isLinuxNotMac">
+        <java
+         fork = "true"
+         classname = "bluej.Boot"
+         failonerror = "true" >
+            <arg value = "-Dawt.useSystemAAFontSettings=on"/>
+            <classpath>
+                <pathelement location="${java.home}/lib/tools.jar"/>
+                <pathelement location="${bluej.lib.dir}/bluej.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <!-- Runs the program. -->
+    <target name = "launch" depends = "launch-1,launch-alt"
+     description = "Launches BlueJ"/>
+
+    <!-- Prints and saves BlueJ's output. -->
+    <target name = "capture-log" depends = "launch"
+     description = "Prints BlueJ's logs then saves them to the ${results.dir}">
+        <!-- Make sure the BlueJ lib dir exists -->
+        <condition property="user.bluej.dir.exists">
+            <available file = "${user.bluej.dir}"/>
+        </condition>
+        <fail message = "${error.message.user.bluej.dir.does.not.exit}"
+         unless = "user.bluej.dir.exists"/>
+        <echo message = "-----------------------------------------------"/>
+        <echo message = "BEGIN BlueJ's output:"/>
+        <echo message = "-----------------------------------------------"/>
+        <concat>
+            <fileset file = "${bluej.log.file}"/>
+        </concat>
+        <echo message = "-----------------------------------------------"/>
+        <echo message = "END BlueJ's output."/>
+        <echo message = "-----------------------------------------------"/>
+        <waitfor>
+            <available file="${bluej.log.file}"/>
+        </waitfor>
+        <copy file = "${bluej.log.file}" todir = "${results.dir}" />
+    </target>
+
+    <!-- Prints and saves BlueJ's output. -->
+    <target name = "run" depends = "capture-log"
+     description = "Performs all necessary actions to launch BlueJ then shows
+the debug log."/>
+    
+    <!-- Generates Java Docs -->
+    <target name = "doc" depends = "compile"
+        description = "Generates Java documentation.">
+        <javadoc sourcepath = "${source.dir}" destdir = "${doc.dir}">
+            <classpath refid = "cp"/>
+        </javadoc>
+    </target>
+</project>

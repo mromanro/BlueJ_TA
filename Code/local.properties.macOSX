@@ -1,0 +1,4 @@
+bluej.dir=/Applications/BlueJ/BlueJ.app/
+bluej.lib.dir=${bluej.dir}/Contents/Resources/Java/
+user.bluej.dir=${user.home}/Library/Preferences/org.bluej
+bluej.launch.command=${bluej.dir}/Contents/MacOS/JavaAppLauncher

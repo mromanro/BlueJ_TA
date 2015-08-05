@@ -1,0 +1,4 @@
+bluej.dir=C:\\Program Files (x86)\\BlueJ
+bluej.lib.dir=${bluej.dir}\\lib
+user.bluej.dir=${user.home}\\bluej
+bluej.launch.command=${bluej.dir}\\BlueJ.exe
